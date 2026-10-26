@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © OOCS Commerce (https://www.oocscommerce.com). All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!--
+        Lynx checkout renderer of the Stripe Payment Element method (docs/payment-integration.md): the renderer only
+        produces the confirmation token, the module confirms the intent on placement. Requires "Place order first
+        (REST API)" enabled so 3DS runs in afterPlaceOrder.
+    -->
+    <type name="OOCS\LynxCheckout\Provider\Checkout\Step\Payment">
+        <arguments>
+            <argument name="paymentMethodRenderers" xsi:type="array">
+                <item name="stripe_payments" xsi:type="array">
+                    <item name="component" xsi:type="string">OOCS_LynxPaymentStripe/Components/PaymentElement</item>
+                    <item name="config" xsi:type="object">OOCS\LynxPaymentStripe\Model\Config\PaymentElement</item>
+                </item>
+                <!--
+                    Redirect mode (payment_flow = 1): payment happens on a Stripe-hosted page whose URL the renderer
+                    fetches after placement. Only one of the two methods is ever available.
+                -->
+                <item name="stripe_payments_checkout" xsi:type="array">
+                    <item name="component" xsi:type="string">OOCS_LynxPaymentStripe/Components/StripeCheckout</item>
+                    <item name="config" xsi:type="object">OOCS\LynxPaymentStripe\Model\Config\StripeCheckout</item>
+                </item>
+                <!--
+                    Push-payment over bank rails: a Payment Element restricted to customer_balance; availability is
+                    the module's.
+                -->
+                <item name="stripe_payments_bank_transfers" xsi:type="array">
+                    <item name="component" xsi:type="string">OOCS_LynxPaymentStripe/Components/BankTransfers</item>
+                    <item name="config" xsi:type="object">OOCS\LynxPaymentStripe\Model\Config\BankTransfers</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>

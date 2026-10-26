@@ -1,0 +1,30 @@
+"Apple Pay, Google Pay, Link, PayPal, Amazon Pay and Klarna in one Stripe Express Checkout Element for the checkout page — the wallet supplies the address and the shipping choice, and the order is placed without walking the steps. Which wallets appear, and how they look, is the Stripe express configuration; the element hides itself when the browser can offer none of them."
+type StripeExpressWallets @component(
+  code: "default_stripe_express_wallets"
+  template: "OOCS_LynxPaymentStripe::Components/Express/Wallets"
+  provider: "OOCS\\LynxPaymentStripe\\Provider\\Express\\Wallets"
+  label: "Stripe Express Wallets"
+  group: "express_checkout"
+  icon: "ph-wallet"
+  zones: ["content"]
+  availableOn: ["checkout_index_index"]
+) {
+  "False when the module says this page gets no wallets; nothing renders."
+  enabled: Boolean! @optional
+  "Every string the component shows, translated by the provider on the server."
+  labels: StringMap! @optional
+  apiKey: String! @optional
+  appInfo: Json @optional
+  options: Json! @optional
+  locale: String! @optional
+  buttonOptions: Json! @optional
+  location: String! @optional
+  urls: StripeExpressWalletsUrls! @optional
+}
+
+type StripeExpressWalletsUrls {
+  params: String! @optional
+  shipping_address: String! @optional
+  shipping_rate: String! @optional
+  place_order: String! @optional
+}

@@ -1,0 +1,25 @@
+{
+    "name": "oocscommerce/module-lynx-payment-stripe",
+    "description": "Lynx PaymentStripe module",
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "require": {
+        "php": ">=8.2",
+        "magento/framework": "*",
+        "oocscommerce/module-lynx-checkout": "^1.0",
+        "oocscommerce/module-lynx-component": "^1.0",
+        "stripe/module-payments": "*"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "OOCS\\LynxPaymentStripe\\": ""
+        }
+    }
+}
